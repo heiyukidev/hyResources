@@ -4,7 +4,7 @@
     "heiyukidev <heiyukidev@gmail.com>"
   ],
     "version": "0.3.0",
-    "description": "hyResources handles all your Rest Resources in one module. It allows you to register all your rest resources in one big module and only returns a promise of execution when called.",
+    "description": "hyResources is a restful resource manager. it helps you configure resources and store them in one module.",
     "main": "hyResources.js",
     "keywords": [
     "Rest",
