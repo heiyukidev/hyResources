@@ -1,11 +1,12 @@
 {
-  "name": "hyResources",
-  "authors": [
-    "heiyuki <heiyukidev@gmail.com>"
+    "name": "hyResources",
+    "authors": [
+    "heiyukidev <heiyukidev@gmail.com>"
   ],
-  "description": "hyResources handles all your Rest Resources in one module. It allows you to register all your rest resources in one big module and only returns a promise of execution when called.",
-  "main": "app.js",
-  "keywords": [
+    "version": "0.3.0",
+    "description": "hyResources handles all your Rest Resources in one module. It allows you to register all your rest resources in one big module and only returns a promise of execution when called.",
+    "main": "hyResources.js",
+    "keywords": [
     "Rest",
     "Module",
     "Api",
@@ -22,9 +23,9 @@
     "$promise",
     "promise"
   ],
-  "license": "MIT",
-  "homepage": "https://github.com/heiyukidev",
-  "ignore": [
+    "license": "MIT",
+    "homepage": "https://github.com/heiyukidev",
+    "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
@@ -32,8 +33,8 @@
     "test",
     "tests"
   ],
-  "dependencies": {
-    "angular": "angularjs#^1.5.9",
-    "angular-resource": "^1.5.9"
-  }
+    "dependencies": {
+        "angular": "angularjs#^1.5.9",
+        "angular-resource": "^1.5.9"
+    }
 }
