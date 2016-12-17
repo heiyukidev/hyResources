@@ -1,10 +1,10 @@
 (function(angular){
     'use strict';
-    function runFn($hyResources){
+    function runFn(hyResources){
         //Initializing the local Storage for 
         localStorage.hyResources = JSON.stringify([]);
     }
-    runFn.$inject = ['$hyResources']
+    runFn.$inject = ['hyResources']
     angular.module("hyResources",['ngResource']).run(runFn);
     
     
@@ -125,5 +125,5 @@
         }
     }
     ServiceFn.$inject = ['$resource'];
-    angular.module("hyResources").service("$hyResources", ServiceFn);
+    angular.module("hyResources").service("hyResources", ServiceFn);
 })(angular);
