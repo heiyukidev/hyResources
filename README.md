@@ -2,8 +2,19 @@
 hyResources is a restful resource manager. it helps you configure resources and store them in one module.
 
 hyResources (HeiYuki Ressources) is very simple to use
+# Get hyResources
+We recommend downloading this package with bower beceause it has a dependency with angular-resource.
+if you just download this package then you should also get angular-resource:
+https://github.com/angular/bower-angular-resource
 
 ## Implementation
+To get the module to work you of corse need to import it in your HTML file.
+Since hyResources relies on ngResource you also need to import angular-resource.js with hyResources.js
+```html
+<script src="angular/angular.min.js"></script>
+<script src="angular-resource/angular-resource.min.js"></script>
+<script src="hyResources/hyResources.min.js"></script>
+```
 hyResources is an AngularJs module that you first need to inject:
 ```javascript
 angular.module("app",['hyResources']);
