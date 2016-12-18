@@ -111,17 +111,17 @@
         this.add = function (name, entity) {
             var resource = newRessource(name);
             var persist = new resource(entity);
-            persist.$save();
+            return persist.$save();
         }
         this.update = function (name, entity) {
             var resource = newRessource(name);
             var persist = new resource(entity);
-            persist.$update();
+            return persist.$update();
         }
         this.delete = function (name, entity) {
             var resource = newRessource(name);
             var persist = new resource(entity);
-            persist.$remove();
+            return persist.$remove();
         }
     }
     ServiceFn.$inject = ['$resource'];
