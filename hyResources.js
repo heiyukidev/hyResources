@@ -12,8 +12,6 @@
     function ServiceFn($resource) {
         //Default Configuration Of a Resource
         var defaultConfig = {
-            "name": name,
-            "resource": resource,
             "GetParams": {
                 "HeaderContentType": "application/json",
                 "Method": "GET",
@@ -40,23 +38,31 @@
             return JSON.parse(localStorage.hyResources);
         }
         ///Add a new ressource in local storage
-        this.addResource = function (name, resource, config) {
+        function addResource(name, resource, config) {
             var resources = getAll();
             var obj = defaultConfig;
             if (config) {
                 obj = config;
             }
+            obj.name = name;
+            obj.resource = resource;
             resources.push(obj);
             localStorage.hyResources = JSON.stringify(resources);
         };
+        /// Public Add
+        this.addResource = function (name, resource, config) {
+            addResource(name, resource, config);
+        }
 
+        ///Removes a resource
         function removeResource(name) {
             var resources = getAll();
-            var res = findResource(name);
-            var index = resources.indexOf(res);
+            var index = resourceIndex(name);
+            alert(index);
             if (index > -1) {
-                array.splice(index, 1);
+                resources.splice(index, 1);
             }
+            localStorage.hyResources = JSON.stringify(resources);
         };
         ///Finds a ressource
         function findResource(name) {
@@ -64,6 +70,15 @@
             for (var i = 0; i < resources.length; i++) {
                 if (resources[i].name == name) {
                     return resources[i];
+                }
+            }
+        };
+        ///Finds a ressource's Index
+        function resourceIndex(name) {
+            var resources = getAll();
+            for (var i = 0; i < resources.length; i++) {
+                if (resources[i].name == name) {
+                    return i;
                 }
             }
         };
@@ -141,16 +156,46 @@
 
         //Getter and setter
         this.configResource = function (name) {
-            this.method = function (method) {
-                this.isArray = function (newValue) {
-                    res = findResource(name);
-                    removeResource(res);
-                    if(method == 'get'){
-                        GetParams.IsArray = newValue;
+            var res = findResource(name);
+            var conf = {};
+            conf.method = function (method) {
+                var meth = {};
+                meth.isArray = function (newValue) {
+                    removeResource(res.name);
+                    if (method == 'get') {
+                        res.GetParams.IsArray = newValue;
                     }
-                    ServiceFn.addResource(res.name,res.resource,res);
+                    if (method == 'add') {
+                        res.AddParams.IsArray = newValue;
+                    }
+                    if (method == 'update') {
+                        res.UpdateParams.IsArray = newValue;
+                    }
+                    if (method == 'delete') {
+                        res.DeleteParams.IsArray = newValue;
+                    }
+                    addResource(res.name, res.resource, res);
                 }
+                
+                meth.ContentType = function (newValue) {
+                    removeResource(res.name);
+                    if (method == 'get') {
+                        res.GetParams.HeaderContentType = newValue;
+                    }
+                    if (method == 'add') {
+                        res.AddParams.HeaderContentType = newValue;
+                    }
+                    if (method == 'update') {
+                        res.UpdateParams.HeaderContentType = newValue;
+                    }
+                    if (method == 'delete') {
+                        res.DeleteParams.HeaderContentType = newValue;
+                    }
+                    addResource(res.name, res.resource, res);
+                }
+                return meth;
             }
+            return conf;
         }
 
     }
