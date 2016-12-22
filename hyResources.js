@@ -10,39 +10,53 @@
 
 
     function ServiceFn($resource) {
+        //Default Configuration Of a Resource
+        var defaultConfig = {
+            "name": name,
+            "resource": resource,
+            "GetParams": {
+                "HeaderContentType": "application/json",
+                "Method": "GET",
+                "IsArray": true
+            },
+            "AddParams": {
+                "HeaderContentType": "application/json",
+                "Method": "POST",
+                "IsArray": false
+            },
+            "UpdateParams": {
+                "HeaderContentType": "application/json",
+                "Method": "PUT",
+                "IsArray": false
+            },
+            "DeleteParams": {
+                "HeaderContentType": "application/json",
+                "Method": "DELETE",
+                "IsArray": false
+            }
+        };
         ///Get All Ressources
         function getAll() {
             return JSON.parse(localStorage.hyResources);
         }
         ///Add a new ressource in local storage
-        this.addResource = function (name, resource) {
+        this.addResource = function (name, resource, config) {
             var resources = getAll();
-            var obj = {
-                "name": name,
-                "resource": resource,
-                "GetParams": {
-                    "HeaderContentType": "application/json",
-                    "Method": "GET",
-                    "IsArray": true
-                },
-                "AddParams": {
-                    "HeaderContentType": "application/json",
-                    "Method": "POST",
-                    "IsArray": false
-                },
-                "UpdateParams": {
-                    "HeaderContentType": "application/json",
-                    "Method": "PUT",
-                    "IsArray": false
-                },
-                "DeleteParams": {
-                    "HeaderContentType": "application/json",
-                    "Method": "DELETE",
-                    "IsArray": false
-                }
-            };
+            var obj = defaultConfig;
+            if (config) {
+                obj = config;
+            }
             resources.push(obj);
             localStorage.hyResources = JSON.stringify(resources);
+        };
+
+        function removeResource(name) {
+            var resources = getAll();
+            var res = findResource(name);
+            var index = resources.indexOf(res);
+            if (index > -1) {
+                array.splice(index, 1);
+            }
         };
         ///Finds a ressource
         function findResource(name) {
@@ -127,13 +141,16 @@
 
         //Getter and setter
         this.configResource = function (name) {
-            var res = findResource(name);
-            res.method = function (method) {
-                this.isArray = function(newValue){
-                    res.isArray = newValue;
+            this.method = function (method) {
+                this.isArray = function (newValue) {
+                    res = findResource(name);
+                    removeResource(res);
+                    if(method == 'get'){
+                        GetParams.IsArray = newValue;
+                    }
+                    ServiceFn.addResource(res.name,res.resource,res);
                 }
             }
-            return res;
         }
 
     }
