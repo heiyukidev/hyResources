@@ -1,16 +1,17 @@
-(function(angular){
+(function (angular) {
     'use strict';
-    function runFn(hyResources){
+
+    function runFn(hyResources) {
         //Initializing the local Storage for 
         localStorage.hyResources = JSON.stringify([]);
     }
     runFn.$inject = ['hyResources']
-    angular.module("hyResources",['ngResource']).run(runFn);
-    
-    
-      function ServiceFn($resource) {
+    angular.module("hyResources", ['ngResource']).run(runFn);
+
+
+    function ServiceFn($resource) {
         ///Get All Ressources
-        function getAll(){
+        function getAll() {
             return JSON.parse(localStorage.hyResources);
         }
         ///Add a new ressource in local storage
@@ -123,6 +124,18 @@
             var persist = new resource(entity);
             return persist.$remove();
         }
+
+        //Getter and setter
+        this.configResource = function (name) {
+            var res = findResource(name);
+            res.method = function (method) {
+                this.isArray = function(newValue){
+                    res.isArray = newValue;
+                }
+            }
+            return res;
+        }
+
     }
     ServiceFn.$inject = ['$resource'];
     angular.module("hyResources").service("hyResources", ServiceFn);
