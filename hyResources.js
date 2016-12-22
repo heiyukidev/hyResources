@@ -58,7 +58,6 @@
         function removeResource(name) {
             var resources = getAll();
             var index = resourceIndex(name);
-            alert(index);
             if (index > -1) {
                 resources.splice(index, 1);
             }
