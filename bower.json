@@ -34,7 +34,7 @@
     "tests"
   ],
     "dependencies": {
-        "angular": "angularjs#^1.5.9",
-        "angular-resource": "^1.5.9"
+        "angular": "*",
+        "angular-resource": "*"
     }
 }
