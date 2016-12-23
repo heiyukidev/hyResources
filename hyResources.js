@@ -13,22 +13,22 @@
         //Default Configuration Of a Resource
         var defaultConfig = {
             "GetParams": {
-                "HeaderContentType": "application/json",
+                "headers": {},
                 "Method": "GET",
                 "IsArray": true
             },
             "AddParams": {
-                "HeaderContentType": "application/json",
+                "headers": {},
                 "Method": "POST",
                 "IsArray": false
             },
             "UpdateParams": {
-                "HeaderContentType": "application/json",
+                "headers": {},
                 "Method": "PUT",
                 "IsArray": false
             },
             "DeleteParams": {
-                "HeaderContentType": "application/json",
+                "headers": {},
                 "Method": "DELETE",
                 "IsArray": false
             }
@@ -89,37 +89,27 @@
             }, {
                 "get": {
                     "method": res.GetParams.Method,
-                    "headers": {
-                        "Content-Type": res.GetParams.HeaderContentType
-                    },
+                    "headers": res.GetParams.headers,
                     "isArray": false
                 },
                 "query": {
                     "method": res.GetParams.Method,
-                    "headers": {
-                        "Content-Type": res.GetParams.HeaderContentType
-                    },
+                    "headers": res.GetParams.headers,
                     "isArray": res.GetParams.IsArray
                 },
                 "save": {
                     "method": res.AddParams.Method,
-                    "headers": {
-                        "Content-Type": res.AddParams.HeaderContentType
-                    },
+                    "headers": res.GetParams.headers,
                     "isArray": res.AddParams.IsArray
                 },
                 "update": {
                     "method": res.UpdateParams.Method,
-                    "headers": {
-                        "Content-Type": res.UpdateParams.HeaderContentType
-                    },
+                    "headers": res.GetParams.headers,
                     "isArray": res.UpdateParams.IsArray
                 },
                 "delete": {
                     "method": res.DeleteParams.Method,
-                    "headers": {
-                        "Content-Type": res.DeleteParams.HeaderContentType
-                    },
+                    "headers": res.GetParams.headers,
                     "isArray": res.DeleteParams.IsArray
                 }
 
@@ -175,7 +165,7 @@
                     }
                     addResource(res.name, res.resource, res);
                 }
-                
+
                 meth.ContentType = function (newValue) {
                     removeResource(res.name);
                     if (method == 'get') {
@@ -189,6 +179,23 @@
                     }
                     if (method == 'delete') {
                         res.DeleteParams.HeaderContentType = newValue;
+                    }
+                    addResource(res.name, res.resource, res);
+                }
+
+                meth.addHeader = function (header, value) {
+                    removeResource(res.name);
+                    if (method == 'get') {
+                        res.GetParams.headers[header] = value;
+                    }
+                    if (method == 'add') {
+                        res.AddParams.headers[header] = value;
+                    }
+                    if (method == 'update') {
+                        res.UpdateParams.headers[header] = value;
+                    }
+                    if (method == 'delete') {
+                        res.DeleteParams.headers[header] = value;
                     }
                     addResource(res.name, res.resource, res);
                 }
