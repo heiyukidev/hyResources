@@ -13,7 +13,7 @@
         //Default Configuration Of a Resource
         var defaultConfig = {
             "GetParams": {
-                "headers": {},
+                "headers": {"Content-Type":"application/json"},
                 "Method": "GET",
                 "IsArray": true
             },
