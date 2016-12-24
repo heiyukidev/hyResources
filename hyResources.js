@@ -18,17 +18,17 @@
                 "IsArray": true
             },
             "AddParams": {
-                "headers": {},
+                "headers": {"Content-Type":"application/json"},
                 "Method": "POST",
                 "IsArray": false
             },
             "UpdateParams": {
-                "headers": {},
+                "headers": {"Content-Type":"application/json"},
                 "Method": "PUT",
                 "IsArray": false
             },
             "DeleteParams": {
-                "headers": {},
+                "headers": {"Content-Type":"application/json"},
                 "Method": "DELETE",
                 "IsArray": false
             }
@@ -99,17 +99,17 @@
                 },
                 "save": {
                     "method": res.AddParams.Method,
-                    "headers": res.GetParams.headers,
+                    "headers": res.AddParams.headers,
                     "isArray": res.AddParams.IsArray
                 },
                 "update": {
                     "method": res.UpdateParams.Method,
-                    "headers": res.GetParams.headers,
+                    "headers": res.UpdateParams.headers,
                     "isArray": res.UpdateParams.IsArray
                 },
                 "delete": {
                     "method": res.DeleteParams.Method,
-                    "headers": res.GetParams.headers,
+                    "headers": res.DeleteParams.headers,
                     "isArray": res.DeleteParams.IsArray
                 }
 
@@ -162,23 +162,6 @@
                     }
                     if (method == 'delete') {
                         res.DeleteParams.IsArray = newValue;
-                    }
-                    addResource(res.name, res.resource, res);
-                }
-
-                meth.ContentType = function (newValue) {
-                    removeResource(res.name);
-                    if (method == 'get') {
-                        res.GetParams.HeaderContentType = newValue;
-                    }
-                    if (method == 'add') {
-                        res.AddParams.HeaderContentType = newValue;
-                    }
-                    if (method == 'update') {
-                        res.UpdateParams.HeaderContentType = newValue;
-                    }
-                    if (method == 'delete') {
-                        res.DeleteParams.HeaderContentType = newValue;
                     }
                     addResource(res.name, res.resource, res);
                 }
