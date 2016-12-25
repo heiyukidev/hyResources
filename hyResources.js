@@ -13,22 +13,30 @@
         //Default Configuration Of a Resource
         var defaultConfig = {
             "GetParams": {
-                "headers": {"Content-Type":"application/json"},
+                "headers": {
+                    "Content-Type": "application/json"
+                },
                 "Method": "GET",
                 "IsArray": true
             },
             "AddParams": {
-                "headers": {"Content-Type":"application/json"},
+                "headers": {
+                    "Content-Type": "application/json"
+                },
                 "Method": "POST",
                 "IsArray": false
             },
             "UpdateParams": {
-                "headers": {"Content-Type":"application/json"},
+                "headers": {
+                    "Content-Type": "application/json"
+                },
                 "Method": "PUT",
                 "IsArray": false
             },
             "DeleteParams": {
-                "headers": {"Content-Type":"application/json"},
+                "headers": {
+                    "Content-Type": "application/json"
+                },
                 "Method": "DELETE",
                 "IsArray": false
             }
@@ -179,6 +187,22 @@
                     }
                     if (method == 'delete') {
                         res.DeleteParams.headers[header] = value;
+                    }
+                    addResource(res.name, res.resource, res);
+                }
+                meth.removeHeader = function (header) {
+                    removeResource(res.name);
+                    if (method == 'get') {
+                        delete res.GetParams.headers[header];
+                    }
+                    if (method == 'add') {
+                        delete res.AddParams.headers[header];
+                    }
+                    if (method == 'update') {
+                        delete res.UpdateParams.headers[header];
+                    }
+                    if (method == 'delete') {
+                        delete res.DeleteParams.headers[header];
                     }
                     addResource(res.name, res.resource, res);
                 }
