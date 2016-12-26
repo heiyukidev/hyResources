@@ -145,7 +145,7 @@ hyResources.configResource(ResourceName).method(MethodName).isArray(Boolean);
 
 # Advanced Config
 you can set up the resource on your own by using the following structure:
-```json
+```javascript
         {
             "GetParams": { //Parameters for the get function of the resource
                 "headers": {
