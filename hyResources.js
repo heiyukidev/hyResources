@@ -208,6 +208,11 @@
                 }
                 return meth;
             }
+            //Dedicace HDMI
+            conf.changeUrl = function (URL){
+                removeResource(res.name);
+                addResource(res.name, URL, res);
+            }
             return conf;
         }
 
