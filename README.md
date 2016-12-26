@@ -110,3 +110,79 @@ Note: hyResources will send the request to the API's url + the data "id" field
 Then your request will be sent to : https://exemple.com/posts/4
 
 if your data doesn't have an id field the request will be sent to : https://exemple.com/posts
+
+# Customize Resources
+
+### Changing URL
+You can Change the URL of a resource any time you want to by executing the folowing command
+
+
+```javascript
+hyResources.configResource(resourceName).changeUrl(NewUrl);
+```
+>Note: if you change the URL it will change for all futre requests
+
+### Customize Headers
+You can add diffrent headers to each of the methods pre-defined in hyResources.
+You need to access the Method first via the method function then specifie the header you want to add.
+
+```javascript
+hyResources.configResource(ResourceName).method(MethodName).addHeader(Header,Value);
+```
+Method names are the names mentionned earlier in the Requests Section:
+get, add, update, delete.
+
+### isArray
+isArray is a boolean that indicates if your restfull API returns an Array or an Object.
+by default it's false except for the get method.
+>Note: using the get Method with a parameter has it's isArray value to false and is not editable.
+
+to change the value of is array, you have to access the function via the method function then set the new value to isArray
+
+```javascript
+hyResources.configResource(ResourceName).method(MethodName).isArray(Boolean);
+```
+
+# Advanced Config
+you can set up the resource on your own by using the following structure:
+```json
+        {
+            "GetParams": { //Parameters for the get function of the resource
+                "headers": {
+                    "Accept": "application/json,
+                    "Authorization": "TOKEN"
+                },
+                "Method": "GET",
+                "IsArray": true
+            },
+            "AddParams": { //Parameters for the add function of the resource
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "Method": "POST",
+                "IsArray": false
+            },
+            "UpdateParams": { //Parameters for the update function of the resource
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "Method": "PUT",
+                "IsArray": false
+            },
+            "DeleteParams": { //Parameters for the delete function of the resource
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "Method": "DELETE",
+                "IsArray": false
+            }
+        }
+```
+>Note: you can change the HTTP Methods to anything like PATCH, OPTION, or even have the get function send a PUT request. You can also have multiple headers like in the exemples
+
+### Implementation
+to Implement the configuration you structured you simply call
+```javascript
+hyResources.addResource(alias,url,config);
+//config is the json objec former earlier
+```

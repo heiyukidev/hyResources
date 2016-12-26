@@ -3,7 +3,7 @@
     "authors": [
     "heiyukidev <heiyukidev@gmail.com>"
   ],
-    "version": "0.8.6",
+    "version": "0.8.7",
     "description": "hyResources is a restful resource manager. it helps you configure resources and store them in one module.",
     "main": "hyResources.js",
     "keywords": [
@@ -21,7 +21,9 @@
     "Modules",
     "$resource",
     "$promise",
-    "promise"
+    "promise",
+        "headers",
+        "custom"
   ],
     "license": "MIT",
     "homepage": "https://github.com/heiyukidev",
