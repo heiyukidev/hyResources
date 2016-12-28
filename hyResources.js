@@ -39,6 +39,9 @@
                 },
                 "Method": "DELETE",
                 "IsArray": false
+            },
+            "extra":{
+                defaultId : "id"
             }
         };
         ///Get All Ressources
@@ -92,8 +95,9 @@
         ///Returns a ressource with all the parameters
         function newRessource(name) {
             var res = findResource(name);
+            
             var resource = $resource(res.resource + "/:id", {
-                "id": "@id"
+                "id": "@"+res.extra.defaultId
             }, {
                 "get": {
                     "method": res.GetParams.Method,
@@ -190,6 +194,7 @@
                     }
                     addResource(res.name, res.resource, res);
                 }
+                
                 meth.removeHeader = function (header) {
                     removeResource(res.name);
                     if (method == 'get') {
@@ -211,6 +216,11 @@
             //Dedicace HDMI
             conf.changeUrl = function (URL){
                 removeResource(res.name);
+                addResource(res.name, URL, res);
+            }
+            conf.defaultId = function (id){
+                removeResource(res.name);
+                res.extra.defaultId = id;
                 addResource(res.name, URL, res);
             }
             return conf;
