@@ -152,7 +152,7 @@
         this.delete = function (name, entity) {
             var resource = newRessource(name);
             var persist = new resource(entity);
-            return persist.$remove();
+            return persist.$delete();
         }
 
         //Getter and setter
