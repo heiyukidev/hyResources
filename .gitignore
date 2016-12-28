@@ -1,2 +1,5 @@
 libs
 node_modules
+test.js
+index.html
+server.js

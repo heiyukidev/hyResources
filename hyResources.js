@@ -9,7 +9,7 @@
     angular.module("hyResources", ['ngResource']).run(runFn);
 
 
-    function ServiceFn($resource) {
+    function ServiceFn($resource, $http) {
         //Default Configuration Of a Resource
         var defaultConfig = {
             "GetParams": {
@@ -40,8 +40,8 @@
                 "Method": "DELETE",
                 "IsArray": false
             },
-            "extra":{
-                defaultId : "id"
+            "extra": {
+                defaultId: "id"
             }
         };
         ///Get All Ressources
@@ -95,9 +95,9 @@
         ///Returns a ressource with all the parameters
         function newRessource(name) {
             var res = findResource(name);
-            
+
             var resource = $resource(res.resource + "/:id", {
-                "id": "@"+res.extra.defaultId
+                "id": "@" + res.extra.defaultId
             }, {
                 "get": {
                     "method": res.GetParams.Method,
@@ -150,9 +150,14 @@
             return persist.$update();
         }
         this.delete = function (name, entity) {
-            var resource = newRessource(name);
-            var persist = new resource(entity);
-            return persist.$delete();
+            var resource = findResource(name);
+            var req = {
+                method: resource.DeleteParams.Method,
+                url: resource.resource,
+                headers: resource.DeleteParams.headers,
+                data: entity
+            };
+            return $http(req);
         }
 
         //Getter and setter
@@ -160,65 +165,65 @@
             var res = findResource(name);
             var conf = {};
             conf.method = function (method) {
-                var meth = {};
-                meth.isArray = function (newValue) {
-                    removeResource(res.name);
-                    if (method == 'get') {
-                        res.GetParams.IsArray = newValue;
+                    var meth = {};
+                    meth.isArray = function (newValue) {
+                        removeResource(res.name);
+                        if (method == 'get') {
+                            res.GetParams.IsArray = newValue;
+                        }
+                        if (method == 'add') {
+                            res.AddParams.IsArray = newValue;
+                        }
+                        if (method == 'update') {
+                            res.UpdateParams.IsArray = newValue;
+                        }
+                        if (method == 'delete') {
+                            res.DeleteParams.IsArray = newValue;
+                        }
+                        addResource(res.name, res.resource, res);
                     }
-                    if (method == 'add') {
-                        res.AddParams.IsArray = newValue;
-                    }
-                    if (method == 'update') {
-                        res.UpdateParams.IsArray = newValue;
-                    }
-                    if (method == 'delete') {
-                        res.DeleteParams.IsArray = newValue;
-                    }
-                    addResource(res.name, res.resource, res);
-                }
 
-                meth.addHeader = function (header, value) {
-                    removeResource(res.name);
-                    if (method == 'get') {
-                        res.GetParams.headers[header] = value;
+                    meth.addHeader = function (header, value) {
+                        removeResource(res.name);
+                        if (method == 'get') {
+                            res.GetParams.headers[header] = value;
+                        }
+                        if (method == 'add') {
+                            res.AddParams.headers[header] = value;
+                        }
+                        if (method == 'update') {
+                            res.UpdateParams.headers[header] = value;
+                        }
+                        if (method == 'delete') {
+                            res.DeleteParams.headers[header] = value;
+                        }
+                        addResource(res.name, res.resource, res);
                     }
-                    if (method == 'add') {
-                        res.AddParams.headers[header] = value;
+
+                    meth.removeHeader = function (header) {
+                        removeResource(res.name);
+                        if (method == 'get') {
+                            delete res.GetParams.headers[header];
+                        }
+                        if (method == 'add') {
+                            delete res.AddParams.headers[header];
+                        }
+                        if (method == 'update') {
+                            delete res.UpdateParams.headers[header];
+                        }
+                        if (method == 'delete') {
+                            delete res.DeleteParams.headers[header];
+                        }
+                        addResource(res.name, res.resource, res);
                     }
-                    if (method == 'update') {
-                        res.UpdateParams.headers[header] = value;
-                    }
-                    if (method == 'delete') {
-                        res.DeleteParams.headers[header] = value;
-                    }
-                    addResource(res.name, res.resource, res);
+                    return meth;
                 }
-                
-                meth.removeHeader = function (header) {
-                    removeResource(res.name);
-                    if (method == 'get') {
-                        delete res.GetParams.headers[header];
-                    }
-                    if (method == 'add') {
-                        delete res.AddParams.headers[header];
-                    }
-                    if (method == 'update') {
-                        delete res.UpdateParams.headers[header];
-                    }
-                    if (method == 'delete') {
-                        delete res.DeleteParams.headers[header];
-                    }
-                    addResource(res.name, res.resource, res);
-                }
-                return meth;
-            }
-            //Dedicace HDMI
-            conf.changeUrl = function (URL){
+                //Dedicace HDMI
+            conf.changeUrl = function (URL) {
                 removeResource(res.name);
                 addResource(res.name, URL, res);
             }
-            conf.defaultId = function (id){
+            conf.defaultId = function (id) {
                 removeResource(res.name);
                 res.extra.defaultId = id;
                 addResource(res.name, URL, res);
@@ -227,6 +232,6 @@
         }
 
     }
-    ServiceFn.$inject = ['$resource'];
+    ServiceFn.$inject = ['$resource', '$http'];
     angular.module("hyResources").service("hyResources", ServiceFn);
 })(angular);
