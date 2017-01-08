@@ -2,7 +2,7 @@
     'use strict';
 
     function runFn(hyResources) {
-        //Initializing the local Storage for 
+        //Initializing the local Storage for
         localStorage.hyResources = JSON.stringify([]);
     }
     runFn.$inject = ['hyResources']
@@ -226,7 +226,7 @@
             conf.defaultId = function (id) {
                 removeResource(res.name);
                 res.extra.defaultId = id;
-                addResource(res.name, URL, res);
+                addResource(res.name, res.resource, res);
             }
             return conf;
         }
