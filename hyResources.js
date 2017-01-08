@@ -1,4 +1,4 @@
-(function (angular) {
+(function(angular) {
     'use strict';
 
     function runFn(hyResources) {
@@ -61,7 +61,7 @@
             localStorage.hyResources = JSON.stringify(resources);
         };
         /// Public Add
-        this.addResource = function (name, resource, config) {
+        this.addResource = function(name, resource, config) {
             addResource(name, resource, config);
         }
 
@@ -129,7 +129,7 @@
             return resource;
         }
         ////Requests
-        this.get = function (name, id) {
+        this.get = function(name, id) {
             var resource = newRessource(name);
             if (id) {
                 return resource.get({
@@ -139,34 +139,40 @@
                 return resource.query().$promise;
             }
         }
-        this.add = function (name, entity) {
+        this.add = function(name, entity) {
             var resource = newRessource(name);
             var persist = new resource(entity);
             return persist.$save();
         }
-        this.update = function (name, entity) {
+        this.update = function(name, entity) {
             var resource = newRessource(name);
             var persist = new resource(entity);
             return persist.$update();
         }
-        this.delete = function (name, entity) {
+        this.delete = function(name, entity) {
+
             var resource = findResource(name);
+            var urlRes = resource.resource;
+            if (entity[resource.extra.defaultId]) {
+                urlRes = urlRes + "/" + resource.extra.defaultId;
+            }
             var req = {
                 method: resource.DeleteParams.Method,
-                url: resource.resource,
+                url: urlRes,
                 headers: resource.DeleteParams.headers,
                 data: entity
             };
             return $http(req);
+
         }
 
         //Getter and setter
-        this.configResource = function (name) {
+        this.configResource = function(name) {
             var res = findResource(name);
             var conf = {};
-            conf.method = function (method) {
+            conf.method = function(method) {
                     var meth = {};
-                    meth.isArray = function (newValue) {
+                    meth.isArray = function(newValue) {
                         removeResource(res.name);
                         if (method == 'get') {
                             res.GetParams.IsArray = newValue;
@@ -183,7 +189,7 @@
                         addResource(res.name, res.resource, res);
                     }
 
-                    meth.addHeader = function (header, value) {
+                    meth.addHeader = function(header, value) {
                         removeResource(res.name);
                         if (method == 'get') {
                             res.GetParams.headers[header] = value;
@@ -200,7 +206,7 @@
                         addResource(res.name, res.resource, res);
                     }
 
-                    meth.removeHeader = function (header) {
+                    meth.removeHeader = function(header) {
                         removeResource(res.name);
                         if (method == 'get') {
                             delete res.GetParams.headers[header];
@@ -219,11 +225,11 @@
                     return meth;
                 }
                 //Dedicace HDMI
-            conf.changeUrl = function (URL) {
+            conf.changeUrl = function(URL) {
                 removeResource(res.name);
                 addResource(res.name, URL, res);
             }
-            conf.defaultId = function (id) {
+            conf.defaultId = function(id) {
                 removeResource(res.name);
                 res.extra.defaultId = id;
                 addResource(res.name, res.resource, res);
