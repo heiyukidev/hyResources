@@ -154,7 +154,7 @@
             var resource = findResource(name);
             var urlRes = resource.resource;
             if (entity[resource.extra.defaultId]) {
-                urlRes = urlRes + "/" + resource.extra.defaultId;
+                urlRes = urlRes + "/" + entity[resource.extra.defaultId];
             }
             var req = {
                 method: resource.DeleteParams.Method,
