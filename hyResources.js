@@ -96,8 +96,8 @@
         function newRessource(name) {
             var res = findResource(name);
 
-            var resource = $resource(res.resource + "/:id", {
-                "id": "@" + res.extra.defaultId
+            var resource = $resource(res.resource + "/:probablyneveruser", {
+              "probablyneveruser": "@" + res.extra.defaultId
             }, {
                 "get": {
                     "method": res.GetParams.Method,
