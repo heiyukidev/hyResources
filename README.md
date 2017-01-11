@@ -1,11 +1,31 @@
 # Synopsis
 hyResources is a restful resource manager. it helps you configure resources and store them in one module.
-
 hyResources (HeiYuki Ressources) is very simple to use
+
 # Get hyResources
 We recommend downloading this package with bower beceause it has a dependency with angular-resource.
 if you just download this package then you should also get angular-resource:
 https://github.com/angular/bower-angular-resource
+
+## How to start
+You can use the included file in 'dist/hyResources.min.js'
+
+or build it:
+
+```bash
+# download the project
+git clone https://github.com/heiyukidev/hyResources.git
+cd hyResources/
+
+# install yarn ( as administrator )
+npm install -g yarn
+
+# install seed dependencies
+yarn
+
+# start developing
+npm run build
+```
 
 ## Implementation
 To get the module to work you of corse need to import it in your HTML file.
@@ -149,7 +169,7 @@ you can set up the resource on your own by using the following structure:
         {
             "GetParams": { //Parameters for the get function of the resource
                 "headers": {
-                    "Accept": "application/json,
+                    "Accept": "application/json",
                     "Authorization": "TOKEN"
                 },
                 "Method": "GET",
