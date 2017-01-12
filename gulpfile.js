@@ -12,11 +12,11 @@ const gulp = require('gulp'),
  */
 const paths = {
     src: 'src',
-    dest: 'dist',
+    dest: './',
 }
 
 gulp.task('clean', function (done) {
-    del.sync(paths.dest);
+    del.sync(paths.dest+"/hyResources.min.js");
     done();
 });
 

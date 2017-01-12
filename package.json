@@ -1,42 +1,46 @@
 {
-  "name": "hyresources",
-  "version": "0.9.3",
-  "description": "hyResources is a restful resource manager. it helps you configure resources and store them in one module.",
-  "main": "src/main.js",
-  "repository": "https://github.com/heiyukidev/hyResources",
-  "author": "heiyukidev <heiyukidev@gmail.com>",
-  "contributors": [
-    "Joumen Harzli <harzli.joumen@gmail.com>"
-  ],
-  "scripts": {
-    "build": "gulp build"
-  },
-  "license": "MIT",
-  "devDependencies": {
-    "del": "^2.2.2",
-    "gulp": "^3.9.1",
-    "gulp-eslint": "^3.0.1",
-    "gulp-rename": "^1.2.2",
-    "gulp-uglify": "^2.0.0",
-    "run-sequence": "^1.2.2"
-  },
-  "keywords": [
-    "Rest",
-    "Module",
-    "Api",
-    "Apis",
-    "Restfull",
-    "Resources",
-    "Resources",
-    "ngResources",
-    "AngularJs",
-    "Angular",
-    "JS",
-    "Modules",
-    "$resource",
-    "$promise",
-    "promise",
-    "headers",
-    "custom"
-  ]
+    "name": "hyresources",
+    "version": "0.9.3",
+    "description": "hyResources is a restful resource manager. it helps you configure resources and store them in one module.",
+    "main": "src/main.js",
+    "repository": "https://github.com/heiyukidev/hyResources",
+    "author": "heiyukidev <heiyukidev@gmail.com>",
+    "contributors": [
+        "Joumen Harzli <harzli.joumen@gmail.com>"
+    ],
+    "scripts": {
+        "build": "gulp build"
+    },
+    "license": "MIT",
+    "devDependencies": {
+        "del": "^2.2.2",
+        "gulp": "^3.9.1",
+        "gulp-eslint": "^3.0.1",
+        "gulp-rename": "^1.2.2",
+        "gulp-uglify": "^2.0.0",
+        "run-sequence": "^1.2.2"
+    },
+    "keywords": [
+        "Rest",
+        "Module",
+        "Api",
+        "Apis",
+        "Restfull",
+        "Resources",
+        "Resources",
+        "ngResources",
+        "AngularJs",
+        "Angular",
+        "JS",
+        "Modules",
+        "$resource",
+        "$promise",
+        "promise",
+        "headers",
+        "custom"
+    ],
+    "dependencies": {
+        "angular": "*",
+        "angular-resource": "*"
+    }
 }
