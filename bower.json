@@ -3,9 +3,9 @@
     "authors": [
     "heiyukidev <heiyukidev@gmail.com>"
   ],
-    "version": "0.9.3",
+    "version": "0.9.5",
     "description": "hyResources is a restful resource manager. it helps you configure resources and store them in one module.",
-    "main": "hyResources.js",
+    "main": "hyResources.min.js",
     "keywords": [
     "Rest",
     "Module",
@@ -26,7 +26,7 @@
         "custom"
   ],
     "license": "MIT",
-    "homepage": "https://github.com/heiyukidev",
+    "homepage":"https://github.com/heiyukidev/hyResources#readme",
     "ignore": [
     "**/.*",
     "node_modules",
@@ -38,5 +38,12 @@
     "dependencies": {
         "angular": "*",
         "angular-resource": "*"
-    }
+    },
+	"repository": {
+    "type": "git",
+    "url": "git+https://github.com/heiyukidev/hyResources.git"
+  },
+  "bugs": {
+    "url": "https://github.com/heiyukidev/hyResources/issues"
+  }
 }
