@@ -14,7 +14,7 @@
         };
         this.configResource = function(name){
           return hyResourceManager.configResource(name);
-        }
+        };
 
         /// Public Get Request
         this.get = function(name, params) {
