@@ -133,7 +133,7 @@
             var resource = newRessource(name);
             if (id) {
                 return resource.get({
-                    "id": id
+                    "probablyneveruser": id
                 }).$promise;
             } else {
                 return resource.query().$promise;

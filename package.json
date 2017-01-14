@@ -5,11 +5,12 @@
   "main": "hyResources.min.js",
   "dependencies": {
     "angular": "*",
-    "angular-resource": "*",
-    "hyresources": "^0.9.5"
+    "angular-resource": "*"
   },
   "devDependencies": {
+    "body-parser": "^1.15.2",
     "del": "^2.2.2",
+    "express": "^4.14.0",
     "gulp": "^3.9.1",
     "gulp-eslint": "^3.0.1",
     "gulp-rename": "^1.2.2",
