@@ -1,15 +1,11 @@
-(function (angular) {
-    'use strict';
-
-    function runFn(hyResources) {
-        //Initializing the local Storage for
-        localStorage.hyResources = JSON.stringify([]);
-    }
-    runFn.$inject = ['hyResources'];
-    angular.module("hyResources", ['ngResource']).run(runFn);
-
-
-    function ServiceFn($resource, $http) {
+(function(angular) {
+    /*
+    This service stores the resource's configurations.
+    it instantiates the resource required 
+    by the hyResources Service for execution.
+    */
+    function ServiceFn($resource) {
+        var resources = [];
         //Default Configuration Of a Resource
         var defaultConfig = {
             "GetParams": {
@@ -44,13 +40,8 @@
                 defaultId: "id"
             }
         };
-        ///Get All Ressources
-        function getAll() {
-            return JSON.parse(localStorage.hyResources);
-        }
         ///Add a new ressource in local storage
         function addResource(name, resource, config) {
-            var resources = getAll();
             var obj = defaultConfig;
             if (config) {
                 obj = config;
@@ -58,25 +49,18 @@
             obj.name = name;
             obj.resource = resource;
             resources.push(obj);
-            localStorage.hyResources = JSON.stringify(resources);
         }
-        /// Public Add
-        this.addResource = function (name, resource, config) {
-            addResource(name, resource, config);
-        };
+
 
         ///Removes a resource
         function removeResource(name) {
-            var resources = getAll();
             var index = resourceIndex(name);
             if (index > -1) {
                 resources.splice(index, 1);
             }
-            localStorage.hyResources = JSON.stringify(resources);
         }
         ///Finds a ressource
         function findResource(name) {
-            var resources = getAll();
             for (var i = 0; i < resources.length; i++) {
                 if (resources[i].name == name) {
                     return resources[i];
@@ -85,89 +69,48 @@
         }
         ///Finds a ressource's Index
         function resourceIndex(name) {
-            var resources = getAll();
             for (var i = 0; i < resources.length; i++) {
                 if (resources[i].name == name) {
                     return i;
                 }
             }
         }
-        ///Returns a ressource with all the parameters
-        function newRessource(name) {
+        ///Returns a instance of a ressource with all the parameters
+        function getResource(name) {
             var res = findResource(name);
-
             var resource = $resource(res.resource + "/:probablyneveruser", {
-              "probablyneveruser": "@" + res.extra.defaultId
+                "probablyneveruser": "@" + res.extra.defaultId
             }, {
-                    "get": {
-                        "method": res.GetParams.Method,
-                        "headers": res.GetParams.headers,
-                        "isArray": false
-                    },
-                    "query": {
-                        "method": res.GetParams.Method,
-                        "headers": res.GetParams.headers,
-                        "isArray": res.GetParams.IsArray
-                    },
-                    "save": {
-                        "method": res.AddParams.Method,
-                        "headers": res.AddParams.headers,
-                        "isArray": res.AddParams.IsArray
-                    },
-                    "update": {
-                        "method": res.UpdateParams.Method,
-                        "headers": res.UpdateParams.headers,
-                        "isArray": res.UpdateParams.IsArray
-                    },
-                    "delete": {
-                        "method": res.DeleteParams.Method,
-                        "headers": res.DeleteParams.headers,
-                        "isArray": res.DeleteParams.IsArray
-                    }
-
-                });
+                "get": {
+                    "method": res.GetParams.Method,
+                    "headers": res.GetParams.headers,
+                    "isArray": false
+                },
+                "query": {
+                    "method": res.GetParams.Method,
+                    "headers": res.GetParams.headers,
+                    "isArray": res.GetParams.IsArray
+                },
+                "save": {
+                    "method": res.AddParams.Method,
+                    "headers": res.AddParams.headers,
+                    "isArray": res.AddParams.IsArray
+                },
+                "update": {
+                    "method": res.UpdateParams.Method,
+                    "headers": res.UpdateParams.headers,
+                    "isArray": res.UpdateParams.IsArray
+                },
+                "delete": {
+                    "method": res.DeleteParams.Method,
+                    "headers": res.DeleteParams.headers,
+                    "isArray": res.DeleteParams.IsArray
+                }
+            });
             return resource;
         }
-        ////Requests
-        this.get = function (name, id) {
-            var resource = newRessource(name);
-            if (id) {
-                return resource.get({
-                    "probablyneveruser": id
-                }).$promise;
-            } else {
-                return resource.query().$promise;
-            }
-        };
-        this.add = function (name, entity) {
-            var resource = newRessource(name);
-            var persist = new resource(entity);
-            return persist.$save();
-        };
-        this.update = function (name, entity) {
-            var resource = newRessource(name);
-            var persist = new resource(entity);
-            return persist.$update();
-        };
-        this.delete = function (name, entity) {
-
-            var resource = findResource(name);
-            var urlRes = resource.resource;
-            if (entity[resource.extra.defaultId]) {
-                urlRes = urlRes + "/" + entity[resource.extra.defaultId];
-            }
-            var req = {
-                method: resource.DeleteParams.Method,
-                url: urlRes,
-                headers: resource.DeleteParams.headers,
-                data: entity
-            };
-            return $http(req);
-
-        };
-
         //Getter and setter
-        this.configResource = function (name) {
+        function configResource(name) {
             var res = findResource(name);
             var conf = {};
             conf.method = function (method) {
@@ -236,8 +179,32 @@
             };
             return conf;
         };
+        //////////////////////////////////////////////////////////////////////////////
+        ///////Public Methods
+        //////////////////////////////////////////////////////////////////////////////
+        
+        /// Public addResource
+        this.addResource = function(name, resource, config) {
+            addResource(name, resource, config);
+        };
+        /// Public removeResource
+        this.removeResource = function(name) {
+            removeResource(name);
+        };
+        /// Public findResource
+        this.findResource = function(name) {
+            return findResource(name);
+        };
+        /// Public getResource
+        this.getResource = function(name) {
+            return getResource(name);
+        };
+        /// Public configResource
+        this.configResource = function(name){
+          return configResource(name);
+        };
 
     }
-    ServiceFn.$inject = ['$resource', '$http'];
-    angular.module("hyResources").service("hyResources", ServiceFn);
+    ServiceFn.$inject = ['$resource'];
+    angular.module('hyResources').service('hyResourceManager', ServiceFn);
 })(angular);

@@ -1,6 +1,6 @@
 {
   "name": "hyresources",
-  "version": "0.9.5",
+  "version": "1.0.0",
   "description": "hyResources is a restful resource manager. it helps you configure resources and store them in one module.",
   "main": "hyResources.min.js",
   "dependencies": {
@@ -12,9 +12,12 @@
     "del": "^2.2.2",
     "express": "^4.14.0",
     "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
     "gulp-eslint": "^3.0.1",
+    "gulp-plumber": "^1.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^2.0.0",
+    "gulp-watch": "^4.3.11",
     "run-sequence": "^1.2.2"
   },
   "keywords": [

@@ -2,7 +2,9 @@
 
 const gulp = require('gulp'),
     uglify = require('gulp-uglify'),
-    rename = require('gulp-rename'),
+    concat = require('gulp-concat'),
+    watch = require('gulp-watch'),
+    plumber = require('gulp-plumber'),
     del = require('del'),
     runSequence = require('run-sequence'),
     eslint = require('gulp-eslint');
@@ -12,33 +14,39 @@ const gulp = require('gulp'),
  */
 const paths = {
     src: 'src',
-    dest: './',
+    dest: 'dist',
 }
 
-gulp.task('clean', function (done) {
-    del.sync(paths.dest+"/hyResources.min.js");
+const files = [
+    paths.src + '/hyResources.module.js',
+    paths.src + '/hyResourceManager.service.js',
+    paths.src + '/hyRequests.service.js',
+    paths.src + '/hyResources.service.js'
+];
+
+gulp.task('clean', function(done) {
+    del.sync(paths.dest + '/hyResources.min.js');
     done();
 });
 
-gulp.task('lint', function () {
-    return gulp.src([paths.src + '/**/*.js'])
+gulp.task('lint', function() {
+    return gulp.src(files)
+        .pipe(plumber())
         .pipe(eslint())
-        .pipe(eslint.format())
+        .pipe(eslint.format());
 });
 
-gulp.task('minify', function () {
-    return gulp.src(paths.src + '/main.js')
+gulp.task('generate', function() {
+    return gulp.src(files)
+        .pipe(plumber())
+        .pipe(concat("hyResources.min.js"))
         .pipe(uglify())
-        .pipe(rename({ basename: 'hyResources', suffix: '.min' }))
         .pipe(gulp.dest(paths.dest));
 });
 
-gulp.task('build', function (done) {
-    runSequence('clean', 'lint', 'minify', function () {
-        done();
-    });
-});
 
-gulp.task('default', ['build'], function () {
+gulp.task('build',['clean','lint','generate']);
 
-});
+gulp.task('watch', ['build']);
+
+gulp.task('default', ['build', 'watch']);

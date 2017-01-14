@@ -9,7 +9,7 @@ https://github.com/angular/bower-angular
 https://github.com/angular/bower-angular-resource
 
 ## How to start
-You can use the included file in 'hyResources.min.js'
+You can use the included file in 'dist/hyResources.min.js'
 
 or build it:
 
@@ -27,8 +27,6 @@ npm install -g yarn
 # install seed dependencies
 yarn
 
-# start developing
-npm run build
 ```
 
 ## Implementation
