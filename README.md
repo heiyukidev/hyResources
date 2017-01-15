@@ -240,3 +240,13 @@ to Implement the configuration you structured you simply call
 hyResources.addResource(alias,url,config);
 //config is the json objec former earlier
 ```
+# Dev Tools
+A couple of small functions that will help you understand how this resource works by seeing how it stores data under the hood.
+
+```javascript
+hyResources.logListResources();
+//Logs all the resources registered at the moment the function is called
+hyResources.logResource();
+//Logs a Single resource
+//Returns an object that represents how data is structured inside the module
+```
