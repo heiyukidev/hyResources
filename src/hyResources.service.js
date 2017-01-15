@@ -17,8 +17,12 @@
           return hyResourceManager.configResource(name);
         };
         // List Resources (DEV)
-        this.listResources = function(){
-          hyResourceManager.listResources();
+        this.logListResources = function(){
+          hyResourceManager.logListResources();
+        };
+        // List Resources (DEV)
+        this.logResource = function(name){
+          hyResourceManager.logResource(name);
         };
         /// Public Get Request
         this.get = function(name, params) {

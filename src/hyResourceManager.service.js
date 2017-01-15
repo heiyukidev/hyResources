@@ -7,42 +7,44 @@
     function ServiceFn($resource) {
         var resources = [];
         //Default Configuration Of a Resource
-        var defaultConfig = {
-            "GetParams": {
-                "headers": {
-                    "Content-Type": "application/json"
+        function defaultConfig() {
+            return {
+                "GetParams": {
+                    "headers": {
+                        "Content-Type": "application/json"
+                    },
+                    "Method": "GET",
+                    "IsArray": true
                 },
-                "Method": "GET",
-                "IsArray": true
-            },
-            "AddParams": {
-                "headers": {
-                    "Content-Type": "application/json"
+                "AddParams": {
+                    "headers": {
+                        "Content-Type": "application/json"
+                    },
+                    "Method": "POST",
+                    "IsArray": false
                 },
-                "Method": "POST",
-                "IsArray": false
-            },
-            "UpdateParams": {
-                "headers": {
-                    "Content-Type": "application/json"
+                "UpdateParams": {
+                    "headers": {
+                        "Content-Type": "application/json"
+                    },
+                    "Method": "PUT",
+                    "IsArray": false
                 },
-                "Method": "PUT",
-                "IsArray": false
-            },
-            "DeleteParams": {
-                "headers": {
-                    "Content-Type": "application/json"
+                "DeleteParams": {
+                    "headers": {
+                        "Content-Type": "application/json"
+                    },
+                    "Method": "DELETE",
+                    "IsArray": false
                 },
-                "Method": "DELETE",
-                "IsArray": false
-            },
-            "extra": {
-                defaultId: "id"
-            }
-        };
+                "extra": {
+                    defaultId: "id"
+                }
+            };
+        }
         ///Add a new ressource in local storage
         function addResource(name, resource, config) {
-            var obj = defaultConfig;
+            var obj = new defaultConfig();
             if (config) {
                 obj = config;
             }
@@ -113,9 +115,9 @@
         function configResource(name) {
             var res = findResource(name);
             var conf = {};
-            conf.method = function (method) {
+            conf.method = function(method) {
                 var meth = {};
-                meth.isArray = function (newValue) {
+                meth.isArray = function(newValue) {
                     removeResource(res.name);
                     if (method == 'get') {
                         res.GetParams.IsArray = newValue;
@@ -132,7 +134,7 @@
                     addResource(res.name, res.resource, res);
                 };
 
-                meth.addHeader = function (header, value) {
+                meth.addHeader = function(header, value) {
                     removeResource(res.name);
                     if (method == 'get') {
                         res.GetParams.headers[header] = value;
@@ -149,7 +151,7 @@
                     addResource(res.name, res.resource, res);
                 };
 
-                meth.removeHeader = function (header) {
+                meth.removeHeader = function(header) {
                     removeResource(res.name);
                     if (method == 'get') {
                         delete res.GetParams.headers[header];
@@ -168,25 +170,29 @@
                 return meth;
             };
             //Dedicace HDMI
-            conf.changeUrl = function (URL) {
+            conf.changeUrl = function(URL) {
                 removeResource(res.name);
                 addResource(res.name, URL, res);
             };
-            conf.defaultId = function (id) {
+            conf.defaultId = function(id) {
                 removeResource(res.name);
                 res.extra.defaultId = id;
                 addResource(res.name, res.resource, res);
             };
             return conf;
         }
-        
-        function listResources(){
-          console.log(resources);
+
+        function logListResources() {
+            console.log(resources);
+        }
+
+        function logResource(name) {
+            console.log(findResource(name));
         }
         //////////////////////////////////////////////////////////////////////////////
         ///////Public Methods
         //////////////////////////////////////////////////////////////////////////////
-        
+
         /// Public addResource
         this.addResource = function(name, resource, config) {
             addResource(name, resource, config);
@@ -204,14 +210,17 @@
             return getResource(name);
         };
         /// Public configResource
-        this.configResource = function(name){
-          return configResource(name);
+        this.configResource = function(name) {
+            return configResource(name);
         };
-        
-        this.listResources = function(){
-          listResources();
+
+        this.logListResources = function() {
+            logListResources();
         }
 
+        this.logResource = function(name) {
+            logResource(name);
+        }
     }
     ServiceFn.$inject = ['$resource'];
     angular.module('hyResources').service('hyResourceManager', ServiceFn);
