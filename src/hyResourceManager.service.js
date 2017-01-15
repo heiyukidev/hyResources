@@ -179,6 +179,10 @@
             };
             return conf;
         }
+        
+        function listResources(){
+          console.log(resources);
+        }
         //////////////////////////////////////////////////////////////////////////////
         ///////Public Methods
         //////////////////////////////////////////////////////////////////////////////
@@ -203,6 +207,10 @@
         this.configResource = function(name){
           return configResource(name);
         };
+        
+        this.listResources = function(){
+          listResources();
+        }
 
     }
     ServiceFn.$inject = ['$resource'];

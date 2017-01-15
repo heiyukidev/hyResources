@@ -12,10 +12,14 @@
         this.removeResource = function(name) {
             hyResourceManager.removeResource(name);
         };
+        // Public configResource
         this.configResource = function(name){
           return hyResourceManager.configResource(name);
         };
-
+        // List Resources (DEV)
+        this.listResources = function(){
+          hyResourceManager.listResources();
+        };
         /// Public Get Request
         this.get = function(name, params) {
             return hyRequests.get(name, params);
