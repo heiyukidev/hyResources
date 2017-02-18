@@ -1,7 +1,7 @@
 (function(angular) {
     /*
     This service stores the resource's configurations.
-    it instantiates the resource required 
+    it instantiates the resource required
     by the hyResources Service for execution.
     */
     function ServiceFn($resource) {
@@ -80,7 +80,7 @@
         ///Returns a instance of a ressource with all the parameters
         function getResource(name) {
             var res = findResource(name);
-            var resource = $resource(res.resource + "/:probablyneveruser", {
+            var resource = $resource(res.resource + "/:probablyneveruser/:definetlyneveruser/:willneveruser", {
                 "probablyneveruser": "@" + res.extra.defaultId
             }, {
                 "get": {

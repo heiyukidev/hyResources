@@ -2,27 +2,29 @@
     'use strict';
 
     function ServiceFn(hyResourceManager, $http) {
-      
+
         ////GET Requests
-        this.get = function(name, params) {
+        this.get = function(name, params, params2, params3) {
             var resource = hyResourceManager.getResource(name);
-            
+
             if (params) {
                 return resource.get({
-                    "probablyneveruser": params
+                    "probablyneveruser": params,
+                    "definetlyneveruser": params2,
+                    "willneveruser": params3
                 }).$promise;
             } else {
                 return resource.query().$promise;
             }
         };
-        
+
         ////POST Requests
         this.add = function(name, entity) {
             var resource = hyResourceManager.getResource(name);
             var persist = new resource(entity);
             return persist.$save();
         };
-        
+
         ////PUT Requests
         this.update = function(name, entity) {
             var resource = hyResourceManager.getResource(name);
