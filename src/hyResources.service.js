@@ -25,8 +25,8 @@
           hyResourceManager.logResource(name);
         };
         /// Public Get Request
-        this.get = function(name, params) {
-            return hyRequests.get(name, params);
+        this.get = function(name, params,params2,params3) {
+            return hyRequests.get(name, params,params2,params3);
         };
         /// Public Post Request
         this.add = function(name, object) {
