@@ -3,7 +3,7 @@
     "authors": [
     "heiyukidev <heiyukidev@gmail.com>"
   ],
-    "version": "1.2.0",
+    "version": "1.2.1",
     "description": "hyResources is a restful resource manager. it helps you configure resources and store them in one module.",
     "main": "hyResources.min.js",
     "keywords": [
